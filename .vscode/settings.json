@@ -1,0 +1,7 @@
+{
+  "dart.flutterSdkPaths": ["/Users/majid/fvm/versions", "/Users/majid/flutter"],
+  "search.exclude": {
+    "**/.fvm": true
+  },
+  "dart.flutterSdkPath": "/Users/majid/flutter"
+}

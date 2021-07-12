@@ -1,0 +1,22 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  // "--no-sound-null-safety",
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "MJ coffee Debug",
+      "request": "launch",
+      "flutterMode": "debug",
+      "type": "dart",
+      "args": ["--dart-define=STREAM_API_KEY=65kafwp5eztf"]
+    },
+    {
+      "name": "MJ coffee Profile",
+      "request": "launch",
+      "flutterMode": "profile",
+      "type": "dart"
+    }
+  ]
+}
