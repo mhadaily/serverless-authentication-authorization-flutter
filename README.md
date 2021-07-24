@@ -8,13 +8,14 @@ You can also follow me on different social media with `@mhadaily` handler, for e
 
 This is an example supporting 5-part articles published originally on Auth0 you can read them here:
 
-1- TBA
-2- TBA
-3- TBA
-4- TBA
-5- TBA
+- 1- TBA
+- 2- TBA
+- 3- TBA
+- 4- TBA
+- 5- TBA
 
-Or you may watch it as a full course on my Youtube channel https://www.youtube.com/playlist?list=PLCOnzDflrUceRLfHEkl-u2ipjsre6ZwjV. If you'd like it, do not forget to like the video too, it will help me to show this content to more developers.
+Or you may watch it as a full course on my Youtube channel https://www.youtube.com/playlist?list=PLCOnzDflrUceRLfHEkl-u2ipjsre6ZwjV.
+If you'd like it, do not forget to like the video too, it will help me to show this content to more developers.
 
 ## How to use this repo
 
