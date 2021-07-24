@@ -41,66 +41,67 @@ class _MenuDetailsState extends State<MenuDetails> {
       appBar: AppBar(
         title: Text(widget.coffee.name),
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 4,
-            color: lightBrown,
-            child: Icon(
-              widget.coffee.coffeeIcon,
-              size: 120,
-              color: brown,
-            ),
-          ),
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 32,
-                vertical: 20,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  CoffeeCount(
-                    price: widget.coffee.price,
-                    notifyValue: (int count) {
-                      setState(() {
-                        totalCount = count;
-                      });
-                    },
-                  ),
-                  Divider(height: 3),
-                  CoffeeSize(icon: widget.coffee.coffeeIcon),
-                  Divider(height: 3),
-                  CoffeeSugar(),
-                  Divider(height: 3),
-                  CoffeeAdditions(),
-                  Divider(height: 3),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        "Total:",
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      Text(
-                        "\$$total",
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                    ],
-                  ),
-                  CommonButton(
-                    onPressed: () {},
-                    text: 'Add to cart',
-                    highlighColor: true,
-                  ),
-                ],
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 4,
+              color: lightBrown,
+              child: Icon(
+                widget.coffee.coffeeIcon,
+                size: 120,
+                color: brown,
               ),
             ),
-          )
-        ],
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 32,
+                  vertical: 20,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    CoffeeCount(
+                      price: widget.coffee.price,
+                      notifyValue: (int count) {
+                        setState(() {
+                          totalCount = count;
+                        });
+                      },
+                    ),
+                    Divider(height: 3),
+                    CoffeeSize(icon: widget.coffee.coffeeIcon),
+                    Divider(height: 3),
+                    CoffeeSugar(),
+                    Divider(height: 3),
+                    CoffeeAdditions(),
+                    Divider(height: 3),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "Total:",
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                        Text(
+                          "\$$total",
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
+                      ],
+                    ),
+                    CommonButton(
+                      onPressed: () {},
+                      text: 'Add to cart',
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

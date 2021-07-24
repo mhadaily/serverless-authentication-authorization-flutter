@@ -49,7 +49,6 @@ class _MenuScreenState extends State<MenuScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        centerTitle: false,
         title: Text("Welcome"),
         actions: [
           /// -----------------------------------

@@ -45,6 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
               "assets/logo.png",
               height: 150,
               width: 150,
+              cacheHeight: 150,
+              cacheWidth: 150,
             ),
             SvgPicture.asset(
               "assets/hangout.svg",
@@ -72,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       /// implement login action
                       /// -----------------------------------
                     },
-                    text: 'Sign In / Sign Up',
+                    text: 'Login | Register',
                   )
                 else
                   Text('Welcome $name'),

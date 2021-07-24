@@ -39,7 +39,6 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
-wiredbraincoffee-a1386-4485fb96c69f.json
 android/key.properties
 **/GoogleService-Info.plist
 

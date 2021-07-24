@@ -24,8 +24,7 @@ class _CoffeeCountState extends State<CoffeeCount> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        CommonButton(
-          padding: EdgeInsets.all(5),
+        TextButton(
           onPressed: () {
             if (count > 1) {
               setState(() {
@@ -45,8 +44,7 @@ class _CoffeeCountState extends State<CoffeeCount> {
           ),
         ),
         SizedBox(width: 20),
-        CommonButton(
-          padding: EdgeInsets.all(5),
+        TextButton(
           onPressed: () {
             setState(() {
               count = count + 1;

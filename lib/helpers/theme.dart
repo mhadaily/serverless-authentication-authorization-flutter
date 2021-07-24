@@ -5,6 +5,7 @@ import 'constants.dart';
 
 ThemeData getTheme() {
   return ThemeData(
+    primaryColor: darkBrown,
     textTheme: TextTheme(
       headline1: TextStyle(
         color: darkBrown,
@@ -31,14 +32,49 @@ ThemeData getTheme() {
     ),
     scaffoldBackgroundColor: Colors.white,
     fontFamily: GoogleFonts.lato().fontFamily,
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all(darkBrown),
+        padding: MaterialStateProperty.all<EdgeInsets>(
+          const EdgeInsets.fromLTRB(55, 15, 55, 15),
+        ),
+        shape: MaterialStateProperty.all(
+          StadiumBorder(),
+        ),
+      ),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(darkBrown),
+        padding: MaterialStateProperty.all<EdgeInsets>(
+          const EdgeInsets.fromLTRB(55, 15, 55, 15),
+        ),
+        shape: MaterialStateProperty.all(
+          StadiumBorder(),
+        ),
+        textStyle: MaterialStateProperty.all(
+          TextStyle(letterSpacing: 2),
+        ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all<EdgeInsets>(
+          const EdgeInsets.fromLTRB(55, 15, 55, 15),
+        ),
+        shape: MaterialStateProperty.all(
+          StadiumBorder(),
+        ),
+      ),
+    ),
     appBarTheme: AppBarTheme(
       iconTheme: IconThemeData(color: Colors.brown),
-      color: Colors.white,
+      color: Colors.transparent,
       elevation: 0.0,
       centerTitle: true,
       textTheme: TextTheme(
         headline6: TextStyle(
-          color: Colors.brown,
+          color: darkBrown,
         ),
       ),
     ),
