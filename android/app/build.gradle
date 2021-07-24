@@ -50,6 +50,9 @@ android {
         versionName flutterVersionName
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+            'appAuthRedirectScheme': 'mj.coffee.app'
+        ]
     }
     signingConfigs {
        release {
