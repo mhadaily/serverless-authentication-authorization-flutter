@@ -30,4 +30,25 @@ class ChatService {
     );
     return user;
   }
+
+  String? _currentChannelId;
+
+  Future<Channel> createSupportChat() async {
+    // To be replaced with EmployeeRole via Auth0
+    final String employeeId = 'randomEmployee';
+    final channel = client.channel(
+      'support',
+      id: _currentChannelId ?? null,
+      extraData: {
+        'name': 'MJCoffee Support',
+        'members': [
+          employeeId,
+          client.state.user!.id,
+        ]
+      },
+    );
+    await channel.watch();
+    _currentChannelId = channel.id;
+    return channel;
+  }
 }
