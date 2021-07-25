@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mjcoffee/helpers/constants.dart';
+import 'package:mjcoffee/models/auth0_id_token.dart';
 
 class AuthService {
   static final AuthService instance = AuthService._internal();
@@ -26,5 +29,20 @@ class AuthService {
     );
 
     print(result);
+  }
+
+  Auth0IdToken parseIdToken(String idToken) {
+    final parts = idToken.split(r'.');
+    assert(parts.length == 3);
+
+    final Map<String, dynamic> json = jsonDecode(
+      utf8.decode(
+        base64Url.decode(
+          base64Url.normalize(parts[1]),
+        ),
+      ),
+    );
+
+    return Auth0IdToken.fromJson(json);
   }
 }
