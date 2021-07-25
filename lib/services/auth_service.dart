@@ -52,6 +52,7 @@ class AuthService {
         AUTH0_REDIRECT_URI,
         issuer: AUTH0_ISSUER,
         scopes: ['openid', 'profile', 'offline_access', 'email'],
+        promptValues: ['login'],
       );
 
       final AuthorizationTokenResponse? result =
@@ -123,5 +124,9 @@ class AuthService {
     } else {
       return 'Something is Wrong!';
     }
+  }
+
+  Future<void> logout() async {
+    await secureStorage.delete(key: REFRESH_TOKEN_KEY);
   }
 }
