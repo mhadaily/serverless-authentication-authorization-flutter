@@ -10,7 +10,12 @@
       "request": "launch",
       "flutterMode": "debug",
       "type": "dart",
-      "args": ["--dart-define=STREAM_API_KEY=65kafwp5eztf"]
+      "args": [
+        "--dart-define",
+        "AUTH0_DOMAIN=mhadaily.eu.auth0.com",
+        "--dart-define",
+        "AUTH0_CLIENT_ID=5jhUzPjXGc6HMLiDrcTCbQYOv8xwuMbF"
+      ]
     },
     {
       "name": "MJ coffee Profile",
