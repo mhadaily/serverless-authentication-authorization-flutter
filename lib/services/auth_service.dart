@@ -62,7 +62,8 @@ class AuthService {
       return await _setLocalVariables(result);
     } on PlatformException {
       return 'User has cancelled or no internet!';
-    } catch (e) {
+    } catch (e, s) {
+      print('Login Uknown erorr $e, $s');
       return 'Unkown Error!';
     }
   }

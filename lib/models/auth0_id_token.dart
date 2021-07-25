@@ -15,7 +15,7 @@ class Auth0IdToken {
     required this.aud,
     required this.iat,
     required this.exp,
-    required this.authTime,
+    this.authTime,
   });
 
   final String nickname;
@@ -37,7 +37,7 @@ class Auth0IdToken {
   final int exp;
 
   @JsonKey(name: 'auth_time')
-  final int authTime;
+  final int? authTime;
 
   factory Auth0IdToken.fromJson(Map<String, dynamic> json) =>
       _$Auth0IdTokenFromJson(json);
