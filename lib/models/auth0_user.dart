@@ -20,7 +20,7 @@ class Auth0User {
   final String updatedAt;
 
   // userID getter to understand it easier
-  String get userId => sub;
+  String get id => sub;
   final String sub;
 
   final String email;

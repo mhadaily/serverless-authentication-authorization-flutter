@@ -1,45 +1,33 @@
-/// -----------------------------------
-///  DEfine STREAM_API_KEY
-/// -----------------------------------
+import 'package:mjcoffee/helpers/constants.dart';
+import 'package:mjcoffee/helpers/is_debug.dart';
+import 'package:mjcoffee/models/auth0_user.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
-/// -----------------------------------
-///  Chat Service Singleton
-/// -----------------------------------
 class ChatService {
   static final ChatService instance = ChatService._internal();
-
-  factory ChatService() {
-    return instance;
-  }
-
+  factory ChatService() => instance;
   ChatService._internal();
 
-  /// -----------------------------------
-  ///  1- Chat Client
-  /// -----------------------------------
+  final StreamChatClient client = StreamChatClient(
+    STREAM_API_KEY,
+    logLevel: isInDebugMode ? Level.INFO : Level.OFF,
+  );
 
-  /// -----------------------------------
-  ///  2- disconnect
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  3- connectUser
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  4- shouldCreateChat
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  5- shouldReconnectChat
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  6- createSupportChat
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  7- createCommunityChat
-  /// -----------------------------------
-
+  Future<Auth0User> connectUser(Auth0User? user) async {
+    if (user == null) {
+      throw Exception('User was not received');
+    }
+    await client.connectUser(
+      User(
+        id: user.id,
+        extraData: {
+          'image': user.picture,
+          'name': user.name,
+        },
+      ),
+      // To be replaced with PRODUCTION TOKEN for user
+      client.devToken(user.id).rawValue,
+    );
+    return user;
+  }
 }
