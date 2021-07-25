@@ -50,7 +50,7 @@ class AuthService {
       final authorizationTokenRequest = AuthorizationTokenRequest(
         AUTH0_CLIENT_ID,
         AUTH0_REDIRECT_URI,
-        issuer: 'https://$AUTH0_DOMAIN',
+        issuer: AUTH0_ISSUER,
         scopes: ['openid', 'profile', 'offline_access', 'email'],
       );
 
@@ -112,10 +112,12 @@ class AuthService {
       idToken = parseIdToken(result.idToken!);
       profile = await getUserDetails(result.accessToken!);
 
-      await secureStorage.write(
-        key: REFRESH_TOKEN_KEY,
-        value: result.refreshToken,
-      );
+      if (result.refreshToken != null) {
+        await secureStorage.write(
+          key: REFRESH_TOKEN_KEY,
+          value: result.refreshToken,
+        );
+      }
 
       return 'Success';
     } else {
