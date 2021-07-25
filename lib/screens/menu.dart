@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mjcoffee/screens/profile.dart';
-import 'package:mjcoffee/screens/support.dart';
 
 import '../helpers/constants.dart';
 import './menu_list.dart';
@@ -24,12 +23,6 @@ class _MenuScreenState extends State<MenuScreen> {
 
   final List<Widget> tabs = [
     MenuList(coffees: coffees),
-
-    /// -----------------------------------
-    ///  CommunityView or ChatView based on role
-    /// -----------------------------------
-    if (true) CommunityView() else ChatView(),
-
     ProfileScreen(),
   ];
 
@@ -70,14 +63,6 @@ class _MenuScreenState extends State<MenuScreen> {
         BottomNavigationBarItem(
           icon: Icon(Icons.list_alt),
           label: "Menu",
-        ),
-
-        /// -----------------------------------
-        ///  BottomNavigationBarItem nased on user role
-        /// -----------------------------------
-        BottomNavigationBarItem(
-          icon: 1 == 1 ? Icon(Icons.support_agent) : Icon(Icons.group),
-          label: 1 == 1 ? "Support" : "Community",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),

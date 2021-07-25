@@ -1,37 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mjcoffee/models/auth0_user.dart';
+import 'package:mjcoffee/services/auth_service.dart';
+import 'package:mjcoffee/services/chat_service.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
-class ChatView extends StatefulWidget {
+class SupportChatScreen extends StatefulWidget {
   @override
-  _ChatViewState createState() => _ChatViewState();
+  _SupportChatScreenState createState() => _SupportChatScreenState();
 }
 
-class _ChatViewState extends State<ChatView> {
-  String? availableCustomerServiceId;
+class _SupportChatScreenState extends State<SupportChatScreen> {
+  Auth0User? profile = AuthService.instance.profile;
+  Channel? channel;
 
   @override
   void initState() {
     super.initState();
+    createChannel();
+  }
 
-    /// -----------------------------------
-    ///  getProfile from auth service
-    /// -----------------------------------
-
-    /// -----------------------------------
-    /// get an available customer service agent
-    /// -----------------------------------
+  createChannel() async {
+    final _channel = await ChatService.instance.createSupportChat();
+    setState(() {
+      channel = _channel;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return availableCustomerServiceId == null
+    return channel == null
         ? Center(
             child: Text('You are int he queue!, please wait...'),
           )
-
-        /// -----------------------------------
-        /// implement chat
-        /// -----------------------------------
-        : Container();
+        : Scaffold(
+            body: SafeArea(
+              child: StreamChannel(
+                channel: channel!,
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: MessageListView(),
+                    ),
+                    MessageInput(
+                      disableAttachments: true,
+                      sendButtonLocation: SendButtonLocation.inside,
+                      actionsLocation: ActionsLocation.leftInside,
+                      showCommandsButton: true,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
   }
 }
