@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mjcoffee/helpers/constants.dart';
@@ -19,22 +20,26 @@ class AuthService {
   Auth0IdToken? idToken;
   String? auth0AccessToken;
 
-  login() async {
-    // construct Authorization Token Request
-    final authorizationTokenRequest = AuthorizationTokenRequest(
-      AUTH0_CLIENT_ID,
-      AUTH0_REDIRECT_URI,
-      issuer: 'https://$AUTH0_DOMAIN',
-      scopes: ['openid', 'profile', 'offline_access', 'email'],
-    );
+  Future<String> login() async {
+    try {
+      final authorizationTokenRequest = AuthorizationTokenRequest(
+        AUTH0_CLIENT_ID,
+        AUTH0_REDIRECT_URI,
+        issuer: 'https://$AUTH0_DOMAIN',
+        scopes: ['openid', 'profile', 'offline_access', 'email'],
+      );
 
-    // Call code exchange endpoint to get an authorization token
-    final AuthorizationTokenResponse? result =
-        await appAuth.authorizeAndExchangeCode(
-      authorizationTokenRequest,
-    );
+      final AuthorizationTokenResponse? result =
+          await appAuth.authorizeAndExchangeCode(
+        authorizationTokenRequest,
+      );
 
-    print(result);
+      return await _setLocalVariables(result);
+    } on PlatformException {
+      return 'User has cancelled or no internet!';
+    } catch (e) {
+      return 'Unkown Error!';
+    }
   }
 
   Auth0IdToken parseIdToken(String idToken) {
