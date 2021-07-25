@@ -20,7 +20,8 @@ class Auth0User {
   final String updatedAt;
 
   // userID getter to understand it easier
-  String get id => sub;
+  // GetStream doesn't not accept | in the userId, so we need to remove it
+  String get id => sub.split('|').join('');
   final String sub;
 
   final String email;

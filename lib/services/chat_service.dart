@@ -35,7 +35,7 @@ class ChatService {
 
   Future<Channel> createSupportChat() async {
     // To be replaced with EmployeeRole via Auth0
-    final String employeeId = 'randomEmployee';
+    final String employeeId = 'rootEmployeeId';
     final channel = client.channel(
       'support',
       id: _currentChannelId ?? null,

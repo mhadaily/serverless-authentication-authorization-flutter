@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mjcoffee/screens/profile.dart';
+import 'package:mjcoffee/screens/support.dart';
 
 import '../helpers/constants.dart';
 import './menu_list.dart';
@@ -23,6 +24,7 @@ class _MenuScreenState extends State<MenuScreen> {
 
   final List<Widget> tabs = [
     MenuList(coffees: coffees),
+    SupportChatScreen(),
     ProfileScreen(),
   ];
 
@@ -63,6 +65,10 @@ class _MenuScreenState extends State<MenuScreen> {
         BottomNavigationBarItem(
           icon: Icon(Icons.list_alt),
           label: "Menu",
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.support),
+          label: "Support",
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.person),

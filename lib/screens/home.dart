@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mjcoffee/screens/menu.dart';
 import 'package:mjcoffee/services/auth_service.dart';
+import 'package:mjcoffee/services/chat_service.dart';
 import 'package:mjcoffee/services/coffee_router.dart';
 import 'package:mjcoffee/widgets/button.dart';
 
@@ -83,7 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
       isLoggedIn = true;
       name = AuthService.instance.idToken?.name;
     });
-
+    
+    ChatService.instance.connectUser(AuthService.instance.profile);
     CoffeeRouter.instance.push(MenuScreen.route());
   }
 
