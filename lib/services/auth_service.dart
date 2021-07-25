@@ -1,53 +1,11 @@
-/// -----------------------------------
-///   Auth0 environment variables
-/// -----------------------------------
+import 'package:flutter_appauth/flutter_appauth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// -----------------------------------
-///  Auth Service Singleton
-/// -----------------------------------
 class AuthService {
   static final AuthService instance = AuthService._internal();
-
-  factory AuthService() {
-    return instance;
-  }
-
+  factory AuthService() => instance;
   AuthService._internal();
 
-  /// -----------------------------------
-  ///  1- instantiate appAuth
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  2- instantiate secure storage
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  3- init
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  4- login
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  5- setProfileAndIdToken
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  6- logout
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  7- parseIdToken
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  8- getUserDetails
-  /// -----------------------------------
-
-  /// -----------------------------------
-  ///  9- availableCustomerService
-  /// -----------------------------------
-
+  final FlutterAppAuth appAuth = FlutterAppAuth();
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 }
