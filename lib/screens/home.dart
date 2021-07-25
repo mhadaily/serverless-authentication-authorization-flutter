@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mjcoffee/screens/menu.dart';
+import 'package:mjcoffee/services/auth_service.dart';
 import 'package:mjcoffee/services/coffee_router.dart';
 import 'package:mjcoffee/widgets/button.dart';
 
@@ -18,19 +19,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final loginScaffoldKey = GlobalKey<ScaffoldState>();
-
-  bool isBusy = false;
+  bool isProgressing = false;
   bool isLoggedIn = false;
   String errorMessage = '';
   String? name;
-  String? picture;
 
   @override
   void initState() {
-    /// -----------------------------------
-    /// implement init action
-    /// -----------------------------------
+    initAction();
     super.initState();
   }
 
@@ -63,17 +59,11 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                if (isBusy)
+                if (isProgressing)
                   CircularProgressIndicator()
                 else if (!isLoggedIn)
                   CommonButton(
-                    onPressed: () {
-                      CoffeeRouter.instance.pushReplacement(MenuScreen.route());
-
-                      /// -----------------------------------
-                      /// implement login action
-                      /// -----------------------------------
-                    },
+                    onPressed: loginAction,
                     text: 'Login | Register',
                   )
                 else
@@ -85,5 +75,47 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  setSuccessAuthState() {
+    setState(() {
+      isProgressing = false;
+      isLoggedIn = true;
+      name = AuthService.instance.idToken?.name;
+    });
+
+    CoffeeRouter.instance.push(MenuScreen.route());
+  }
+
+  setLoadingState() {
+    setState(() {
+      isProgressing = true;
+      errorMessage = '';
+    });
+  }
+
+  Future<void> loginAction() async {
+    setLoadingState();
+    final message = await AuthService.instance.login();
+    if (message == 'Success') {
+      setSuccessAuthState();
+    } else {
+      setState(() {
+        isProgressing = false;
+        errorMessage = message;
+      });
+    }
+  }
+
+  initAction() async {
+    setLoadingState();
+    final bool isAuth = await AuthService.instance.init();
+    if (isAuth) {
+      setSuccessAuthState();
+    } else {
+      setState(() {
+        isProgressing = false;
+      });
+    }
   }
 }
