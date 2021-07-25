@@ -14,7 +14,9 @@
         "--dart-define",
         "AUTH0_DOMAIN=mhadaily.eu.auth0.com",
         "--dart-define",
-        "AUTH0_CLIENT_ID=5jhUzPjXGc6HMLiDrcTCbQYOv8xwuMbF"
+        "AUTH0_CLIENT_ID=5jhUzPjXGc6HMLiDrcTCbQYOv8xwuMbF",
+        "--dart-define",
+        "STREAM_API_KEY=zav4v47f85ff"
       ]
     },
     {
