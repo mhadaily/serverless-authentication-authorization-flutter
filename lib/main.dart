@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:mjcoffee/screens/home.dart';
+import 'package:mjcoffee/services/chat_service.dart';
 import 'package:mjcoffee/services/coffee_router.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart';
 
 import 'helpers/is_debug.dart';
 import 'helpers/theme.dart';
@@ -24,10 +26,12 @@ Future<void> main() async {
           home: HomeScreen(),
           navigatorKey: CoffeeRouter.instance.navigatorKey,
           theme: getTheme(),
-
-          /// -----------------------------------
-          ///  Add Builder for GetStreamChat
-          /// -----------------------------------
+          builder: (context, child) {
+            return StreamChat(
+              child: child,
+              client: ChatService.instance.client,
+            );
+          },
         ),
       );
     },
@@ -35,10 +39,6 @@ Future<void> main() async {
       print('Caught Dart Error!');
       print('$error');
       print('$stackTrace');
-
-      /// -----------------------------------
-      ///  Handle Error Reporting system
-      /// -----------------------------------
     },
   );
 
