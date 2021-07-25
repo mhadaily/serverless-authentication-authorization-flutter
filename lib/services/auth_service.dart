@@ -71,4 +71,24 @@ class AuthService {
       throw Exception('Failed to get user details');
     }
   }
+
+  Future<String> _setLocalVariables(result) async {
+    final bool isValidResult =
+        result != null && result.accessToken != null && result.idToken != null;
+
+    if (isValidResult) {
+      auth0AccessToken = result.accessToken;
+      idToken = parseIdToken(result.idToken!);
+      profile = await getUserDetails(result.accessToken!);
+
+      await secureStorage.write(
+        key: REFRESH_TOKEN_KEY,
+        value: result.refreshToken,
+      );
+
+      return 'Success';
+    } else {
+      return 'Something is Wrong!';
+    }
+  }
 }
