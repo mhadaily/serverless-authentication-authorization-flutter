@@ -52,7 +52,7 @@ class ChatService {
 
     final channel = client.channel(
       'support',
-      id: _currentChannelId ?? null,
+      id: _currentChannelId,
       extraData: {
         'name': 'MJCoffee Support',
         'members': [
@@ -67,7 +67,12 @@ class ChatService {
   }
 
   Future<void> archiveSupportChat() async {
-    await client.channel('suppport', id: _currentChannelId).hide();
+    await client.hideChannel(
+      _currentChannelId!,
+      'support',
+      clearHistory: true,
+    );
+    client.channel('support', id: _currentChannelId).dispose();
     _currentChannelId = null;
     _currentEmployeeId = null;
   }
