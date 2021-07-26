@@ -18,6 +18,21 @@ class Auth0User {
     required this.permissions,
     required this.roles,
   });
+
+  String get id => sub.split('|')[1];
+  bool get hasImage => picture.isNotEmpty;
+  bool can(String permission) => permissions
+      .where(
+        (p) => p.permissionName == permission,
+      )
+      .isNotEmpty;
+
+  get isAdmin => roles.where((role) => role.name == Role.Admin).isNotEmpty;
+  get isEmployee =>
+      roles.where((role) => role.name == Role.Employee).isNotEmpty;
+  get isCustomer =>
+      roles.where((role) => role.name == Role.Customer).isNotEmpty;
+
   final String nickname;
   final String name;
   final String picture;
