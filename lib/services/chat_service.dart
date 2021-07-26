@@ -45,7 +45,8 @@ class ChatService {
     if (_currentEmployeeId == null) {
       final _random = new Random();
       final randomNumber = 0 + _random.nextInt(availableAgents.length - 0);
-      final String employeeId = availableAgents[randomNumber];
+      final String employeeId =
+          availableAgents[randomNumber].split('|').join('');
       _currentEmployeeId = employeeId;
     }
 
