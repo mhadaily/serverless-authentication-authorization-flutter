@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mjcoffee/models/auth0_permissions.dart';
 import 'package:mjcoffee/models/auth0_user.dart';
 import 'package:mjcoffee/services/auth_service.dart';
 import 'package:mjcoffee/services/chat_service.dart';
@@ -47,10 +48,10 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
                       child: MessageListView(),
                     ),
                     MessageInput(
-                      disableAttachments: true,
+                      disableAttachments: !profile!.can(UserPermissions.upload),
                       sendButtonLocation: SendButtonLocation.inside,
                       actionsLocation: ActionsLocation.leftInside,
-                      showCommandsButton: true,
+                      showCommandsButton: !profile?.isCustomer,
                     ),
                   ],
                 ),
