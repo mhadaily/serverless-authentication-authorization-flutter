@@ -19,6 +19,8 @@ Auth0IdToken _$Auth0IdTokenFromJson(Map<String, dynamic> json) {
     iat: json['iat'] as int,
     exp: json['exp'] as int,
     authTime: json['auth_time'] as int?,
+    streamChatUserToken:
+        json['https://getstream.mjcoffee.app/user_token'] as String,
   );
 }
 
@@ -35,4 +37,5 @@ Map<String, dynamic> _$Auth0IdTokenToJson(Auth0IdToken instance) =>
       'iat': instance.iat,
       'exp': instance.exp,
       'auth_time': instance.authTime,
+      'https://getstream.mjcoffee.app/user_token': instance.streamChatUserToken,
     };

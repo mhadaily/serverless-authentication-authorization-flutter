@@ -14,6 +14,8 @@ Auth0User _$Auth0UserFromJson(Map<String, dynamic> json) {
     picture: json['picture'] as String,
     updatedAt: json['updated_at'] as String,
     sub: json['sub'] as String,
+    streamChatUserToken:
+        json['https://getstream.mjcoffee.app/user_token'] as String,
   );
 }
 
@@ -24,4 +26,5 @@ Map<String, dynamic> _$Auth0UserToJson(Auth0User instance) => <String, dynamic>{
       'updated_at': instance.updatedAt,
       'sub': instance.sub,
       'email': instance.email,
+      'https://getstream.mjcoffee.app/user_token': instance.streamChatUserToken,
     };

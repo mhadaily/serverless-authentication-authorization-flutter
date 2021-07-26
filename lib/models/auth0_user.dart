@@ -11,6 +11,7 @@ class Auth0User {
     required this.picture,
     required this.updatedAt,
     required this.sub,
+    required this.streamChatUserToken,
   });
   final String nickname;
   final String name;
@@ -25,6 +26,9 @@ class Auth0User {
   final String sub;
 
   final String email;
+
+  @JsonKey(name: 'https://getstream.mjcoffee.app/user_token')
+  final String streamChatUserToken;
 
   factory Auth0User.fromJson(Map<String, dynamic> json) =>
       _$Auth0UserFromJson(json);

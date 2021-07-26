@@ -25,8 +25,8 @@ class ChatService {
           'name': user.name,
         },
       ),
-      // To be replaced with PRODUCTION TOKEN for user
-      client.devToken(user.id).rawValue,
+      // client.devToken(user.id).rawValue,
+      user.streamChatUserToken,
     );
     return user;
   }

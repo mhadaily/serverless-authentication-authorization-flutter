@@ -16,6 +16,7 @@ class Auth0IdToken {
     required this.iat,
     required this.exp,
     this.authTime,
+    required this.streamChatUserToken,
   });
 
   final String nickname;
@@ -38,6 +39,9 @@ class Auth0IdToken {
 
   @JsonKey(name: 'auth_time')
   final int? authTime;
+
+  @JsonKey(name: 'https://getstream.mjcoffee.app/user_token')
+  final String streamChatUserToken;
 
   factory Auth0IdToken.fromJson(Map<String, dynamic> json) =>
       _$Auth0IdTokenFromJson(json);
