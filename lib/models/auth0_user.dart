@@ -19,7 +19,6 @@ class Auth0User {
     required this.roles,
   });
 
-  String get id => sub.split('|')[1];
   bool get hasImage => picture.isNotEmpty;
   bool can(String permission) => permissions
       .where(
