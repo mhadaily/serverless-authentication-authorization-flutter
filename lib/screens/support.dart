@@ -4,7 +4,11 @@ import 'package:mjcoffee/models/auth0_permissions.dart';
 import 'package:mjcoffee/models/auth0_user.dart';
 import 'package:mjcoffee/services/auth_service.dart';
 import 'package:mjcoffee/services/chat_service.dart';
+import 'package:mjcoffee/services/coffee_router.dart';
+import 'package:mjcoffee/widgets/button.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart';
+
+import 'menu.dart';
 
 class SupportChatScreen extends StatefulWidget {
   @override
@@ -48,6 +52,7 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
                       child: MessageListView(),
                     ),
                     MessageInput(
+                      actions: [_closeChat()],
                       disableAttachments: !profile!.can(UserPermissions.upload),
                       sendButtonLocation: SendButtonLocation.inside,
                       actionsLocation: ActionsLocation.leftInside,
@@ -58,5 +63,18 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
               ),
             ),
           );
+  }
+
+  CommonButton _closeChat() {
+    return CommonButton(
+      onPressed: () {
+        ChatService.instance.archiveSupportChat();
+        CoffeeRouter.instance.push(MenuScreen.route());
+      },
+      child: Icon(
+        Icons.close,
+        color: Colors.red,
+      ),
+    );
   }
 }

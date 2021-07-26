@@ -65,4 +65,10 @@ class ChatService {
     _currentChannelId = channel.id;
     return channel;
   }
+
+  Future<void> archiveSupportChat() async {
+    client.channel('suppport', id: _currentChannelId).hide();
+    _currentChannelId = null;
+    _currentEmployeeId = null;
+  }
 }
