@@ -68,12 +68,13 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
   CommonButton _closeChat() {
     return CommonButton(
       onPressed: () {
+        // todo(mhadaily): do alertDialog to confirm
         ChatService.instance.archiveSupportChat();
         CoffeeRouter.instance.push(MenuScreen.route());
       },
       child: Icon(
         Icons.close,
-        color: Colors.red,
+        color: Colors.white,
       ),
     );
   }

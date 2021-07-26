@@ -95,8 +95,6 @@ class AuthService {
       headers: {'Authorization': 'Bearer $accessToken'},
     );
 
-    print('getUserDetails ${response.body}');
-
     if (response.statusCode == 200) {
       return Auth0User.fromJson(jsonDecode(response.body));
     } else {
