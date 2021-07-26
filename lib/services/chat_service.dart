@@ -13,22 +13,26 @@ class ChatService {
     logLevel: isInDebugMode ? Level.INFO : Level.OFF,
   );
 
-  Future<Auth0User> connectUser(Auth0User? user) async {
-    if (user == null) {
-      throw Exception('User was not received');
+  Future<Auth0User?> connectUser(Auth0User? user) async {
+    try {
+      if (user == null) {
+        throw Exception('User was not received');
+      }
+      await client.connectUser(
+        User(
+          id: user.id,
+          extraData: {
+            'image': user.picture,
+            'name': user.name,
+          },
+        ),
+        // client.devToken(user.id).rawValue,
+        user.streamChatUserToken,
+      );
+      return user;
+    } catch (e, s) {
+      print('ConnectUser $e, $s');
     }
-    await client.connectUser(
-      User(
-        id: user.id,
-        extraData: {
-          'image': user.picture,
-          'name': user.name,
-        },
-      ),
-      // client.devToken(user.id).rawValue,
-      user.streamChatUserToken,
-    );
-    return user;
   }
 
   String? _currentChannelId;

@@ -78,14 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  setSuccessAuthState() {
+  setSuccessAuthState() async {
     setState(() {
       isProgressing = false;
       isLoggedIn = true;
       name = AuthService.instance.idToken?.name;
     });
-    
-    ChatService.instance.connectUser(AuthService.instance.profile);
+
+    await ChatService.instance.connectUser(AuthService.instance.profile);
     CoffeeRouter.instance.push(MenuScreen.route());
   }
 
