@@ -23,6 +23,11 @@ Auth0User _$Auth0UserFromJson(Map<String, dynamic> json) {
     roles: (json['https://users.mjcoffee.app/roles'] as List<dynamic>)
         .map((e) => Auth0Role.fromJson(e as Map<String, dynamic>))
         .toList(),
+    availableAgents:
+        (json['https://employees.mjcoffee.app/id'] as List<dynamic>?)
+                ?.map((e) => e as String)
+                .toList() ??
+            [],
   );
 }
 
@@ -36,4 +41,5 @@ Map<String, dynamic> _$Auth0UserToJson(Auth0User instance) => <String, dynamic>{
       'https://getstream.mjcoffee.app/user_token': instance.streamChatUserToken,
       'https://users.mjcoffee.app/roles': instance.roles,
       'https://users.mjcoffee.app/permissions': instance.permissions,
+      'https://employees.mjcoffee.app/id': instance.availableAgents,
     };

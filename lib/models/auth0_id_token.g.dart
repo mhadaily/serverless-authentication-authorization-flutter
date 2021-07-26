@@ -28,6 +28,11 @@ Auth0IdToken _$Auth0IdTokenFromJson(Map<String, dynamic> json) {
         (json['https://users.mjcoffee.app/permissions'] as List<dynamic>)
             .map((e) => Auth0Permission.fromJson(e as Map<String, dynamic>))
             .toList(),
+    availableAgents:
+        (json['https://employees.mjcoffee.app/id'] as List<dynamic>?)
+                ?.map((e) => e as String)
+                .toList() ??
+            [],
   );
 }
 
@@ -47,4 +52,5 @@ Map<String, dynamic> _$Auth0IdTokenToJson(Auth0IdToken instance) =>
       'https://getstream.mjcoffee.app/user_token': instance.streamChatUserToken,
       'https://users.mjcoffee.app/roles': instance.roles,
       'https://users.mjcoffee.app/permissions': instance.permissions,
+      'https://employees.mjcoffee.app/id': instance.availableAgents,
     };

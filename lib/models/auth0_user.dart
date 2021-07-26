@@ -17,6 +17,7 @@ class Auth0User {
     required this.streamChatUserToken,
     required this.permissions,
     required this.roles,
+    required this.availableAgents,
   });
 
   bool get hasImage => picture.isNotEmpty;
@@ -54,6 +55,9 @@ class Auth0User {
 
   @JsonKey(name: 'https://users.mjcoffee.app/permissions')
   final List<Auth0Permission> permissions;
+
+  @JsonKey(name: 'https://employees.mjcoffee.app/id', defaultValue: [])
+  final List<String> availableAgents;
 
   factory Auth0User.fromJson(Map<String, dynamic> json) =>
       _$Auth0UserFromJson(json);

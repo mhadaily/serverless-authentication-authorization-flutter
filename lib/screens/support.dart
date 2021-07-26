@@ -21,10 +21,14 @@ class _SupportChatScreenState extends State<SupportChatScreen> {
   }
 
   createChannel() async {
-    final _channel = await ChatService.instance.createSupportChat();
-    setState(() {
-      channel = _channel;
-    });
+    if (profile != null) {
+      final _channel = await ChatService.instance.createSupportChat(
+        profile!.availableAgents,
+      );
+      setState(() {
+        channel = _channel;
+      });
+    }
   }
 
   @override

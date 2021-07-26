@@ -22,6 +22,7 @@ class Auth0IdToken {
     required this.streamChatUserToken,
     required this.roles,
     required this.permissions,
+    required this.availableAgents,
   });
 
   final String nickname;
@@ -53,6 +54,9 @@ class Auth0IdToken {
 
   @JsonKey(name: 'https://users.mjcoffee.app/permissions')
   final List<Auth0Permission> permissions;
+
+  @JsonKey(name: 'https://employees.mjcoffee.app/id', defaultValue: [])
+  final List<String> availableAgents;
 
   factory Auth0IdToken.fromJson(Map<String, dynamic> json) =>
       _$Auth0IdTokenFromJson(json);

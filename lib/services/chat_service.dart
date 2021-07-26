@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:mjcoffee/helpers/constants.dart';
 import 'package:mjcoffee/helpers/is_debug.dart';
 import 'package:mjcoffee/models/auth0_user.dart';
@@ -36,17 +38,24 @@ class ChatService {
   }
 
   String? _currentChannelId;
+  String? _currentEmployeeId;
 
-  Future<Channel> createSupportChat() async {
-    // To be replaced with EmployeeRole via Auth0
-    final String employeeId = 'rootEmployeeId';
+  Future<Channel> createSupportChat(List<String> availableAgents) async {
+    // skip if the chat is still open with current employeeId
+    if (_currentEmployeeId == null) {
+      final _random = new Random();
+      final randomNumber = 0 + _random.nextInt(availableAgents.length - 0);
+      final String employeeId = availableAgents[randomNumber];
+      _currentEmployeeId = employeeId;
+    }
+
     final channel = client.channel(
       'support',
       id: _currentChannelId ?? null,
       extraData: {
         'name': 'MJCoffee Support',
         'members': [
-          employeeId,
+          _currentEmployeeId,
           client.state.user!.id,
         ]
       },
