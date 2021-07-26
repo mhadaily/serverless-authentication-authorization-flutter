@@ -1,5 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'auth0_permissions.dart';
+import 'auth0_roles.dart';
+
 part 'auth0_user.g.dart';
 
 @JsonSerializable()
@@ -12,6 +15,8 @@ class Auth0User {
     required this.updatedAt,
     required this.sub,
     required this.streamChatUserToken,
+    required this.permissions,
+    required this.roles,
   });
   final String nickname;
   final String name;
@@ -29,6 +34,12 @@ class Auth0User {
 
   @JsonKey(name: 'https://getstream.mjcoffee.app/user_token')
   final String streamChatUserToken;
+
+  @JsonKey(name: 'https://users.mjcoffee.app/roles')
+  final List<Auth0Role> roles;
+
+  @JsonKey(name: 'https://users.mjcoffee.app/permissions')
+  final List<Auth0Permission> permissions;
 
   factory Auth0User.fromJson(Map<String, dynamic> json) =>
       _$Auth0UserFromJson(json);
