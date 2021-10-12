@@ -3,6 +3,7 @@ import 'package:mjcoffee/models/coffee.dart';
 import 'package:mjcoffee/screens/menu_detail.dart';
 import 'package:mjcoffee/services/coffee_router.dart';
 import 'package:mjcoffee/helpers/constants.dart';
+import 'package:go_router/go_router.dart';
 
 class MenuList extends StatefulWidget {
   const MenuList({
@@ -76,10 +77,15 @@ class _MenuListState extends State<MenuList> {
           trailing: Icon(Icons.keyboard_arrow_right),
         ),
         onTap: () {
-          CoffeeRouter.instance.push(
-            MenuDetails.route(
-              coffee: _items[index],
-            ),
+          // CoffeeRouter.instance.push(
+          //   MenuDetails.route(
+          //     coffee: _items[index],
+          //   ),
+          // );
+          // context.go('/menu/${_items[index].id}');
+          context.goNamed(
+            'details',
+            params: {'id': _items[index].id.toString()},
           );
         },
       ),

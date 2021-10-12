@@ -2,13 +2,110 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mjcoffee/screens/home.dart';
-import 'package:mjcoffee/services/coffee_router.dart';
+import 'package:mjcoffee/screens/menu.dart';
+import 'package:mjcoffee/screens/menu_detail.dart';
 
+import 'helpers/constants.dart';
 import 'helpers/is_debug.dart';
 import 'helpers/theme.dart';
+import 'models/coffee.dart';
+
+class LoginInfo extends ChangeNotifier {
+  var _isLoggedIn = false;
+
+  bool get isLoggedIn => _isLoggedIn;
+
+  set isLoggedIn(bool value) {
+    _isLoggedIn = value;
+    notifyListeners();
+  }
+}
+
+final loginInfo = LoginInfo();
+
+class LoginScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: TextButton(
+          child: Text('Login'),
+          onPressed: () {
+            loginInfo.isLoggedIn = true;
+          },
+        ),
+      ),
+    );
+  }
+}
 
 Future<void> main() async {
+  final router = GoRouter(
+    redirect: (GoRouterState state) {
+      final loggedIn = loginInfo.isLoggedIn;
+
+      final isLogging = state.location == '/login';
+
+      if (!loggedIn && !isLogging) return '/login';
+
+      if (loggedIn && isLogging) return '/';
+
+      return null;
+    },
+    refreshListenable: loginInfo,
+    urlPathStrategy: UrlPathStrategy.path,
+    debugLogDiagnostics: true,
+    routes: [
+      GoRoute(
+        name: 'home',
+        path: '/',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: HomeScreen(),
+        ),
+      ),
+      GoRoute(
+        name: 'login',
+        path: '/login',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: LoginScreen(),
+        ),
+      ),
+      GoRoute(
+        name: 'menu',
+        path: '/menu',
+        pageBuilder: (context, state) => MaterialPage(
+          key: state.pageKey,
+          child: MenuScreen(),
+        ),
+        routes: [
+          GoRoute(
+            name: 'details',
+            path: ':id', // e.g. /menu/1002
+            pageBuilder: (context, state) {
+              final coffee = _coffeeFrom(state.params['id']!);
+              return MaterialPage(
+                key: state.pageKey,
+                child: MenuDetails(coffee: coffee),
+              );
+            },
+          ),
+        ],
+      ),
+    ],
+    errorPageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: Scaffold(
+        body: Center(
+          child: Text(state.error.toString()),
+        ),
+      ),
+    ),
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
 
   runZonedGuarded<Future<void>>(
@@ -18,16 +115,19 @@ Future<void> main() async {
       );
 
       runApp(
-        MaterialApp(
+        // MaterialApp(
+        //   debugShowCheckedModeBanner: false,
+        //   themeMode: ThemeMode.system,
+        //   home: HomeScreen(),
+        //   navigatorKey: CoffeeRouter.instance.navigatorKey,
+        //   theme: getTheme(),
+        // ),
+        MaterialApp.router(
+          routeInformationParser: router.routeInformationParser,
+          routerDelegate: router.routerDelegate,
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.system,
-          home: HomeScreen(),
-          navigatorKey: CoffeeRouter.instance.navigatorKey,
           theme: getTheme(),
-
-          /// -----------------------------------
-          ///  Add Builder for GetStreamChat
-          /// -----------------------------------
         ),
       );
     },
@@ -35,10 +135,6 @@ Future<void> main() async {
       print('Caught Dart Error!');
       print('$error');
       print('$stackTrace');
-
-      /// -----------------------------------
-      ///  Handle Error Reporting system
-      /// -----------------------------------
     },
   );
 
@@ -55,4 +151,8 @@ Future<void> main() async {
       Zone.current.handleUncaughtError(exception, stackTrace!);
     }
   };
+}
+
+Coffee _coffeeFrom(String s) {
+  return coffees.where((coffee) => coffee.id.toString() == s).first;
 }

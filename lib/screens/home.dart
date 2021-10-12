@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mjcoffee/screens/menu.dart';
 import 'package:mjcoffee/services/coffee_router.dart';
 import 'package:mjcoffee/widgets/button.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = 'homeScreen';
@@ -66,7 +67,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 else if (!isLoggedIn)
                   CommonButton(
                     onPressed: () {
-                      CoffeeRouter.instance.pushReplacement(MenuScreen.route());
+                      // CoffeeRouter.instance.pushReplacement(MenuScreen.route());
+                      context.goNamed('menu');
 
                       /// -----------------------------------
                       /// implement login action
