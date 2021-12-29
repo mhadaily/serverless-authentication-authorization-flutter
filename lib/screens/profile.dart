@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mjcoffee/screens/home.dart';
 import 'package:mjcoffee/services/coffee_router.dart';
 import 'package:mjcoffee/widgets/button.dart';
@@ -36,7 +37,7 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 30),
           child: CommonButton(
             onPressed: () async {
-              CoffeeRouter.instance.pushReplacement(HomeScreen.route());
+              GoRouter.of(context).goNamed('home');
 
               /// -----------------------------------
               ///  perform logout and if success disconnect chat and redirect to home screen
