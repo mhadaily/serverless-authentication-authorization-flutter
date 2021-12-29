@@ -1,16 +1,75 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:mjcoffee/models/coffee.dart';
-import 'package:mjcoffee/screens/menu_detail.dart';
-import 'package:mjcoffee/services/coffee_router.dart';
 import 'package:mjcoffee/helpers/constants.dart';
 import 'package:go_router/go_router.dart';
+
+class ListTileBuilderWidget extends StatelessWidget {
+  const ListTileBuilderWidget({
+    Key? key,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+  }) : super(key: key);
+
+  final String title;
+  final String subtitle;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    if (Platform.isIOS || Platform.isAndroid) {
+      return ListTile(
+        contentPadding: EdgeInsets.all(15),
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.headline5,
+        ),
+        subtitle: Text(
+          subtitle,
+          style: Theme.of(context).textTheme.subtitle2,
+        ),
+        leading: Icon(
+          icon,
+          size: 40,
+          color: brown,
+        ),
+        trailing: Icon(Icons.keyboard_arrow_right),
+      );
+    } else if (Platform.isMacOS) {
+      return Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: MacosListTile(
+          title: Text(
+            title,
+            style: MacosTheme.of(context).typography.headline,
+          ),
+          subtitle: Text(
+            subtitle,
+            style: MacosTheme.of(context).typography.subheadline,
+          ),
+          leading: Icon(
+            icon,
+            size: 40,
+            color: brown,
+          ),
+        ),
+      );
+    }
+    return Container();
+  }
+}
 
 class MenuList extends StatefulWidget {
   const MenuList({
     required this.coffees,
+    this.scrollController,
   });
 
   final List<Coffee> coffees;
+  final ScrollController? scrollController;
 
   @override
   _MenuListState createState() => _MenuListState();
@@ -31,6 +90,7 @@ class _MenuListState extends State<MenuList> {
   Widget build(BuildContext context) {
     return AnimatedList(
       key: listKey,
+      controller: widget.scrollController,
       initialItemCount: _items.length,
       itemBuilder: (context, index, animation) {
         return slideIt(context, index, animation);
@@ -59,22 +119,10 @@ class _MenuListState extends State<MenuList> {
         ),
       ),
       child: GestureDetector(
-        child: ListTile(
-          contentPadding: EdgeInsets.all(15),
-          title: Text(
-            _items[index].name,
-            style: Theme.of(context).textTheme.headline5,
-          ),
-          subtitle: Text(
-            widget.coffees[index].name,
-            style: Theme.of(context).textTheme.subtitle2,
-          ),
-          leading: Icon(
-            widget.coffees[index].coffeeIcon,
-            size: 40,
-            color: brown,
-          ),
-          trailing: Icon(Icons.keyboard_arrow_right),
+        child: ListTileBuilderWidget(
+          icon: widget.coffees[index].coffeeIcon,
+          title: _items[index].name,
+          subtitle: _items[index].name,
         ),
         onTap: () {
           // CoffeeRouter.instance.push(

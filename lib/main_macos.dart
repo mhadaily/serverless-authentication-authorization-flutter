@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:macos_ui/macos_ui.dart';
 import 'package:mjcoffee/screens/home.dart';
 import 'package:mjcoffee/screens/menu.dart';
 import 'package:mjcoffee/screens/menu_detail.dart';
@@ -11,6 +12,7 @@ import 'helpers/constants.dart';
 import 'helpers/is_debug.dart';
 import 'helpers/theme.dart';
 import 'models/coffee.dart';
+import 'screens/home_desktop.dart';
 
 class LoginInfo extends ChangeNotifier {
   var _isLoggedIn = false;
@@ -63,7 +65,7 @@ Future<void> main() async {
         path: '/',
         pageBuilder: (context, state) => MaterialPage(
           key: state.pageKey,
-          child: HomeScreen(),
+          child: HomeDesktopScreen(),
         ),
       ),
       GoRoute(
@@ -115,19 +117,12 @@ Future<void> main() async {
       );
 
       runApp(
-        // MaterialApp(
-        //   debugShowCheckedModeBanner: false,
-        //   themeMode: ThemeMode.system,
-        //   home: HomeScreen(),
-        //   navigatorKey: CoffeeRouter.instance.navigatorKey,
-        //   theme: getTheme(),
-        // ),
-        MaterialApp.router(
+        MacosApp.router(
           routeInformationParser: router.routeInformationParser,
           routerDelegate: router.routerDelegate,
           debugShowCheckedModeBanner: false,
-          themeMode: ThemeMode.system,
-          theme: getTheme(),
+          themeMode: ThemeMode.light,
+          // theme: getTheme(),
         ),
       );
     },
