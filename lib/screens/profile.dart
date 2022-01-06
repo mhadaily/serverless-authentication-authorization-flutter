@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mjcoffee/models/coffee_store.dart';
 import 'package:mjcoffee/screens/home.dart';
 import 'package:mjcoffee/services/coffee_router.dart';
 import 'package:mjcoffee/widgets/button.dart';
@@ -32,6 +34,11 @@ class ProfileScreen extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        Observer(
+          builder: (_) {
+            return Text('Hello ${coffeeStore.auth.user.value?.name}');
+          },
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30),

@@ -1,40 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mjcoffee/screens/menu.dart';
-import 'package:mjcoffee/services/coffee_router.dart';
+import 'package:mjcoffee/models/coffee_store.dart';
 import 'package:mjcoffee/widgets/button.dart';
-import 'package:go_router/go_router.dart';
 
-class HomeScreen extends StatefulWidget {
-  static String routeName = 'homeScreen';
-  static Route<HomeScreen> route() {
-    return MaterialPageRoute<HomeScreen>(
-      settings: RouteSettings(name: routeName),
-      builder: (BuildContext context) => HomeScreen(),
-    );
-  }
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  final loginScaffoldKey = GlobalKey<ScaffoldState>();
-
-  bool isBusy = false;
-  bool isLoggedIn = false;
-  String errorMessage = '';
-  String? name;
-  String? picture;
-
-  @override
-  void initState() {
-    /// -----------------------------------
-    /// implement init action
-    /// -----------------------------------
-    super.initState();
-  }
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,31 +29,39 @@ class _HomeScreenState extends State<HomeScreen> {
               style: Theme.of(context).textTheme.headline2,
               textAlign: TextAlign.center,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                if (isBusy)
-                  CircularProgressIndicator()
-                else if (!isLoggedIn)
-                  CommonButton(
-                    onPressed: () {
-                      // CoffeeRouter.instance.pushReplacement(MenuScreen.route());
-                      context.goNamed('menu');
-
-                      /// -----------------------------------
-                      /// implement login action
-                      /// -----------------------------------
-                    },
-                    text: 'Sign In / Sign Up',
-                  )
-                else
-                  Text('Welcome $name'),
-              ],
-            ),
-            if (errorMessage.isNotEmpty) Text(errorMessage),
+            LoginButton(),
           ],
         ),
       ),
     );
+  }
+}
+
+class LoginButton extends StatelessWidget {
+  const LoginButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(builder: (context) {
+      final loginState = coffeeStore.auth.loginState.value;
+
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          if (loginState == LoaderState.pending) CircularProgressIndicator(),
+          CommonButton(
+            onPressed: loginState == LoaderState.pending
+                ? null
+                : () {
+                    coffeeStore.auth.login(context);
+                  },
+            text: 'Sign In / Sign Up',
+          ),
+          if (loginState == LoaderState.rejected) Text('Error!'),
+        ],
+      );
+    });
   }
 }
